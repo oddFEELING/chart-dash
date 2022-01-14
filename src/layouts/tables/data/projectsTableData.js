@@ -10,12 +10,13 @@ import MDAvatar from "components/MDAvatar";
 import MDProgress from "components/MDProgress";
 
 // Images
-import LogoAsana from "assets/images/small-logos/logo-asana.svg";
+// import LogoAsana from "assets/images/small-logos/logo-asana.svg";
 import logoGithub from "assets/images/small-logos/github.svg";
 import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
 import logoSlack from "assets/images/small-logos/logo-slack.svg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import logoInvesion from "assets/images/small-logos/logo-invision.svg";
+import logoXd from "../../../assets/images/small-logos/logo-xd.svg";
 
 export default function data() {
   const Project = ({ image, name }) => (
@@ -49,7 +50,7 @@ export default function data() {
 
     rows: [
       {
-        project: <Project image={LogoAsana} name="Asana" />,
+        project: <Project image={logoXd} name="Complete senate building" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $2,500
@@ -68,7 +69,7 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoGithub} name="Github" />,
+        project: <Project image={logoGithub} name="Repaint Junior academic block" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $5,000
@@ -87,7 +88,7 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoAtlassian} name="Atlassian" />,
+        project: <Project image={logoAtlassian} name="Build basketball court" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $3,400
@@ -106,7 +107,7 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoSpotify} name="Spotify" />,
+        project: <Project image={logoSpotify} name="Launch mobiloe app" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $14,000
@@ -125,7 +126,7 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoSlack} name="Slack" />,
+        project: <Project image={logoSlack} name="Build basketball court" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $1,000
@@ -144,7 +145,7 @@ export default function data() {
         ),
       },
       {
-        project: <Project image={logoInvesion} name="Invesion" />,
+        project: <Project image={logoInvesion} name="Redesign Chemistry lab" />,
         budget: (
           <MDTypography component="a" href="#" variant="button" color="text" fontWeight="medium">
             $2,300

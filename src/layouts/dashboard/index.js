@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 
@@ -28,118 +13,137 @@ import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
 // Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+// import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
+// import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
+// import axios
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
+  // const { sales, tasks } = reportsLineChartData;
+  const [StatCard, setStatCard] = useState(false);
+  const [BarData, setBarData] = useState(false);
+  const [LineData, setLineData] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        await axios
+          .post("http://localhost:4001/", { id: "61dfdfd42efe1198a74edbcc" })
+          .then((res) => {
+            const response = res.data.data;
+
+            response.bar_chart.chart[6] = response.dash_query[0].Count;
+            response.line_chart[0].chart[6] = response.dash_query[1].Count;
+            response.line_chart[1].chart[4] = response.dash_query[3].Count;
+
+            setBarData({
+              labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+              datasets: { label: "Sales", data: response.bar_chart.chart },
+            });
+            setLineData({
+              staff: {
+                labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+                datasets: { label: "Staffs", data: response.line_chart[0].chart },
+              },
+              budget: {
+                labels: ["2018", "2019", "2020", "2021", "2022"],
+                datasets: { label: "budget", data: response.line_chart[1].chart },
+              },
+            });
+            if (StatCard !== response) {
+              setStatCard(response);
+            }
+            sessionStorage.setItem("data", JSON.stringify(response));
+          });
+      } catch (err) {
+        throw new Error(err);
+      }
+    })();
+  }, []);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="dark"
-                icon="weekend"
-                title="Bookings"
-                count={281}
-                percentage={{
-                  color: "success",
-                  amount: "+55%",
-                  label: "than lask week",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                icon="leaderboard"
-                title="Today's Users"
-                count="2,300"
-                percentage={{
-                  color: "success",
-                  amount: "+3%",
-                  label: "than last month",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="success"
-                icon="store"
-                title="Revenue"
-                count="34k"
-                percentage={{
-                  color: "success",
-                  amount: "+1%",
-                  label: "than yesterday",
-                }}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <ComplexStatisticsCard
-                color="primary"
-                icon="person_add"
-                title="Followers"
-                count="+91"
-                percentage={{
-                  color: "success",
-                  amount: "",
-                  label: "Just updated",
-                }}
-              />
-            </MDBox>
-          </Grid>
+          {/* ----- map start ----- */}
+          {StatCard.dash_query
+            ? StatCard.dash_query.map((data) => (
+                <Grid item xs={12} md={6} lg={3} key={data.title}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color={data.color}
+                      icon="leaderboard"
+                      title={data.title}
+                      count={data.Count}
+                      percentage={{
+                        color:
+                          Number((data.Count / data.prev_count) * 100 - 100).toFixed(2) > 0
+                            ? "success"
+                            : "error",
+                        amount:
+                          data.Count !== 6
+                            ? `${Number((data.Count / data.prev_count) * 100 - 100).toFixed(2)}%`
+                            : 8,
+                        label: data.percentage.label,
+                      }}
+                    />
+                  </MDBox>
+                </Grid>
+              ))
+            : ""}
+
+          {/* ----- map end ----- */}
         </Grid>
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
+                {StatCard && (
+                  <ReportsBarChart
+                    color="info"
+                    title={StatCard.bar_chart.title}
+                    description={StatCard.bar_chart.Desc}
+                    date={`Sent ${StatCard.bar_chart.date} days ago`}
+                    chart={BarData}
+                  />
+                )}
               </MDBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
+                {StatCard && (
+                  <ReportsLineChart
+                    color="success"
+                    title={StatCard.line_chart[0].title}
+                    description={
+                      <>
+                        (<strong>-10.9%</strong>) decrease in this session.
+                      </>
+                    }
+                    date="updated 4 min ago"
+                    chart={LineData.staff}
+                  />
+                )}
               </MDBox>
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
+                {StatCard && (
+                  <ReportsLineChart
+                    color="dark"
+                    title={StatCard.line_chart[1].title}
+                    description="Last Expense update Performance"
+                    date="just updated"
+                    chart={LineData.budget}
+                  />
+                )}
               </MDBox>
             </Grid>
           </Grid>
@@ -147,15 +151,15 @@ function Dashboard() {
         <MDBox>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8}>
-              <Projects />
+              {StatCard ? <Projects /> : <h1>Loading...</h1>}
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+              {StatCard && <OrdersOverview />}
             </Grid>
           </Grid>
         </MDBox>
       </MDBox>
-      <Footer />
+      {StatCard && <Footer />}
     </DashboardLayout>
   );
 }

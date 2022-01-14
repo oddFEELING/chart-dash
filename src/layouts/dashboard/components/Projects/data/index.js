@@ -10,7 +10,7 @@ import MDProgress from "components/MDProgress";
 
 // Images
 import logoXD from "assets/images/small-logos/logo-xd.svg";
-import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
+// import logoAtlassian from "assets/images/small-logos/logo-atlassian.svg";
 import logoSlack from "assets/images/small-logos/logo-slack.svg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import logoJira from "assets/images/small-logos/logo-jira.svg";
@@ -65,14 +65,14 @@ export default function data() {
 
     rows: [
       {
-        companies: <Company image={logoXD} name="Material UI XD Version" />,
+        companies: <Company image={logoXD} name="Complete Senate building" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
               [team1, "Ryan Tompson"],
               [team2, "Romina Hadid"],
               [team3, "Alexander Smith"],
-              [team4, "Jessica Doe"],
+              [team4, "toby Dennis"],
             ])}
           </MDBox>
         ),
@@ -88,7 +88,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoAtlassian} name="Add Progress Track" />,
+        companies: <Company image={logoXD} name="Repaint Junior academic block" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -109,7 +109,7 @@ export default function data() {
         ),
       },
       {
-        companies: <Company image={logoSlack} name="Fix Platform Errors" />,
+        companies: <Company image={logoSlack} name="Build basketball court" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
@@ -120,7 +120,7 @@ export default function data() {
         ),
         budget: (
           <MDTypography variant="caption" color="text" fontWeight="medium">
-            Not set
+            14500
           </MDTypography>
         ),
         completion: (
@@ -134,7 +134,7 @@ export default function data() {
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
-              [team4, "Jessica Doe"],
+              [team4, "Jessica Mariam"],
               [team3, "Alexander Smith"],
               [team2, "Romina Hadid"],
               [team1, "Ryan Tompson"],
@@ -148,15 +148,15 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={100} color="success" variant="gradient" label={false} />
+            <MDProgress value={10} color="info" variant="gradient" label={false} />
           </MDBox>
         ),
       },
       {
-        companies: <Company image={logoJira} name="Add the New Pricing Page" />,
+        companies: <Company image={logoJira} name="Add new extra curricular activity" />,
         members: (
           <MDBox display="flex" py={1}>
-            {avatars([[team4, "Jessica Doe"]])}
+            {avatars([[team4, "Jessica Mariam"]])}
           </MDBox>
         ),
         budget: (
@@ -166,17 +166,17 @@ export default function data() {
         ),
         completion: (
           <MDBox width="8rem" textAlign="left">
-            <MDProgress value={25} color="info" variant="gradient" label={false} />
+            <MDProgress value={100} color="success" variant="gradient" label={false} />
           </MDBox>
         ),
       },
       {
-        companies: <Company image={logoInvesion} name="Redesign New Online Shop" />,
+        companies: <Company image={logoInvesion} name="Redesign Chemistrty laboratory" />,
         members: (
           <MDBox display="flex" py={1}>
             {avatars([
               [team1, "Ryan Tompson"],
-              [team4, "Jessica Doe"],
+              [team4, "Jessica Mariam"],
             ])}
           </MDBox>
         ),
